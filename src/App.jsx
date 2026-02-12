@@ -8,6 +8,8 @@ import Dashboard from './components/Dashboard';
 import UsersList from './components/UsersList';
 import UserDetail from './components/UserDetail';
 import PropertiesList from './components/PropertiesList';
+import CreateProperty from './components/CreateProperty';
+import ViewProperty from './components/ViewProperty';
 
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
@@ -40,6 +42,8 @@ const App = () => {
             <Route path="users" element={<UsersList />} />
             <Route path="users/:id" element={<UserDetail />} />
             <Route path="properties" element={<PropertiesList />} />
+            <Route path="properties/create" element={<CreateProperty />} />
+            <Route path="properties/:id" element={<ViewProperty />} />
           </Route>
         </Routes>
       </Router>

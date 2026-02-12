@@ -22,8 +22,8 @@ const deleteCookie = (name) => {
   document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;SameSite=Strict;Secure`;
 };
 
-// Base URL for the admin API
-const API_BASE_URL = 'https://elite-properties-backend-production.up.railway.app/api/admin';
+// Base URL for the API
+const API_BASE_URL = 'https://elite-properties-backend-production.up.railway.app/api';
 
 // Create axios instance with default settings
 const api = axios.create({
@@ -56,37 +56,99 @@ api.interceptors.response.use(
 // User Management APIs
 export const userApi = {
   // Get all users
-  getAllUsers: (params = {}) => api.get('/users', { params }),
+  getAllUsers: (params = {}) => api.get('/admin/users', { params }),
   
   // Get user by ID
-  getUserById: (id) => api.get(`/users/${id}`),
+  getUserById: (id) => api.get(`/admin/users/${id}`),
   
   // Delete user
-  deleteUser: (id) => api.delete(`/users/${id}`),
+  deleteUser: (id) => api.delete(`/admin/users/${id}`),
 };
 
 // Property Management APIs
 export const propertyApi = {
   // Get all properties
-  getAllProperties: (params = {}) => api.get('/properties', { params }),
+  getAllProperties: (params = {}) => api.get('/admin/properties', { params }),
+  
+  // Get property by ID
+  getPropertyById: (id) => api.get(`/admin/properties/${id}`),
   
   // Delete property
-  deleteProperty: (id) => api.delete(`/properties/${id}`),
+  deleteProperty: (id) => api.delete(`/admin/properties/${id}`),
   
   // Update property status
-  updatePropertyStatus: (id, status) => api.put(`/properties/${id}/status`, { propertyStatus: status }),
+  updatePropertyStatus: (id, status) => api.put(`/admin/properties/${id}/status`, { propertyStatus: status }),
+  
+  // Create new property
+  createProperty: (propertyData) => api.post('/admin/properties', propertyData),
+  
+  // Upload property pictures
+  uploadPropertyPictures: async (propertyId, pictures = []) => {
+    try {
+      const formData = new FormData();
+      pictures.forEach((p) => formData.append('pictures', p));
+      const response = await api.post(`/admin/properties/upload/pictures/${propertyId}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      return { success: true, data: response.data };
+    } catch (error) {
+      console.error('Upload property pictures error:', error);
+      return { success: false, message: error.response?.data?.message || 'Failed to upload pictures', error };
+    }
+  },
+  
+  // Upload property videos
+  uploadPropertyVideos: async (propertyId, videos = []) => {
+    try {
+      const formData = new FormData();
+      videos.forEach((v) => formData.append('videos', v));
+      const response = await api.post(`/admin/properties/upload/videos/${propertyId}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      return { success: true, data: response.data };
+    } catch (error) {
+      console.error('Upload property videos error:', error);
+      return { success: false, message: error.response?.data?.message || 'Failed to upload videos', error };
+    }
+  },
+  
+  // Delete property picture
+  deletePropertyPicture: async (propertyId, pictureUrl) => {
+    try {
+      const response = await api.delete(`/admin/properties/pictures/${propertyId}`, {
+        data: { pictureUrl }
+      });
+      return { success: true, data: response.data };
+    } catch (error) {
+      console.error('Delete property picture error:', error);
+      return { success: false, message: error.response?.data?.message || 'Failed to delete picture', error };
+    }
+  },
+  
+  // Delete property video
+  deletePropertyVideo: async (propertyId, videoUrl) => {
+    try {
+      const response = await api.delete(`/admin/properties/videos/${propertyId}`, {
+        data: { videoUrl }
+      });
+      return { success: true, data: response.data };
+    } catch (error) {
+      console.error('Delete property video error:', error);
+      return { success: false, message: error.response?.data?.message || 'Failed to delete video', error };
+    }
+  }
 };
 
 // Dashboard Stats API
 export const statsApi = {
   // Get admin statistics
-  getStats: () => api.get('/stats'),
+  getStats: () => api.get('/admin/stats'),
 };
 
 // Authentication APIs
 export const authApi = {
   // Login admin (this would be to the main backend)
-  login: (credentials) => axios.post('https://elite-properties-backend-production.up.railway.app/api/auth/login', credentials),
+  login: (credentials) => api.post('/auth/login', credentials),
 };
 
 // Export cookie utilities

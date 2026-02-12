@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { authApi, setCookie, getCookie, deleteCookie } from '../services/api';
-import AuthContext from '../hooks/useAuth';
+import { AuthContext } from '../hooks/useAuth';
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
