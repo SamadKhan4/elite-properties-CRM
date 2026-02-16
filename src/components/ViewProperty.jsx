@@ -19,7 +19,8 @@ import {
   Camera,
   Play,
   User,
-  Calendar
+  Calendar,
+  Edit
 } from 'lucide-react';
 
 const ViewProperty = () => {
@@ -212,6 +213,15 @@ const ViewProperty = () => {
               Property Details
             </h1>
             <p className="mt-2 text-gray-600">View and manage property information and media.</p>
+          </div>
+          <div>
+            <Link
+              to={`/properties/${id}/edit`}
+              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
+            >
+              <Edit className="h-4 w-4 mr-2" />
+              Edit Property
+            </Link>
           </div>
           <div className="flex items-center">
             <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${

@@ -9,7 +9,12 @@ import UsersList from './components/UsersList';
 import UserDetail from './components/UserDetail';
 import PropertiesList from './components/PropertiesList';
 import CreateProperty from './components/CreateProperty';
+import EditProperty from './components/EditProperty';
 import ViewProperty from './components/ViewProperty';
+import ContactsList from './components/ContactsList';
+import ContactDetail from './components/ContactDetail';
+import MeetingsList from './components/MeetingsList';
+import MeetingDetail from './components/MeetingDetail';
 
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
@@ -43,7 +48,12 @@ const App = () => {
             <Route path="users/:id" element={<UserDetail />} />
             <Route path="properties" element={<PropertiesList />} />
             <Route path="properties/create" element={<CreateProperty />} />
+            <Route path="properties/:id/edit" element={<EditProperty />} />
             <Route path="properties/:id" element={<ViewProperty />} />
+            <Route path="contacts" element={<ContactsList />} />
+            <Route path="contacts/:id" element={<ContactDetail />} />
+            <Route path="meetings" element={<MeetingsList />} />
+            <Route path="meetings/:id" element={<MeetingDetail />} />
           </Route>
         </Routes>
       </Router>

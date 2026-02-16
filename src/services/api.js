@@ -65,6 +65,33 @@ export const userApi = {
   deleteUser: (id) => api.delete(`/admin/users/${id}`),
 };
 
+// Contact Form Management APIs
+export const contactApi = {
+  // Get all contact inquiries
+  getAllContacts: (params = {}) => api.get('/admin/contacts', { params }),
+  
+  // Get contact by ID
+  getContactById: (id) => api.get(`/admin/contacts/${id}`),
+  
+  // Delete contact
+  deleteContact: (id) => api.delete(`/admin/contacts/${id}`),
+};
+
+// Schedule Meeting Management APIs
+export const meetingApi = {
+  // Get all scheduled meetings
+  getAllMeetings: (params = {}) => api.get('/admin/schedule-meetings', { params }),
+  
+  // Get meeting by ID
+  getMeetingById: (id) => api.get(`/admin/schedule-meetings/${id}`),
+  
+  // Update meeting status
+  updateMeetingStatus: (id, status) => api.put(`/admin/schedule-meetings/${id}/status`, { status }),
+  
+  // Delete meeting
+  deleteMeeting: (id) => api.delete(`/admin/schedule-meetings/${id}`),
+};
+
 // Property Management APIs
 export const propertyApi = {
   // Get all properties
@@ -81,6 +108,9 @@ export const propertyApi = {
   
   // Create new property
   createProperty: (propertyData) => api.post('/admin/properties', propertyData),
+  
+  // Update property
+  updateProperty: (id, propertyData) => api.put(`/admin/properties/${id}`, propertyData),
   
   // Upload property pictures
   uploadPropertyPictures: async (propertyId, pictures = []) => {

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, LogOut, Home, Users, Building } from 'lucide-react';
+import { Menu, X, LogOut, Home, Users, Building, MessageCircle, Calendar } from 'lucide-react';
 
 const Layout = () => {
   const { logout, isAuthenticated } = useAuth();
@@ -13,6 +13,8 @@ const Layout = () => {
     { name: 'Dashboard', href: '/dashboard', icon: Home },
     { name: 'Users', href: '/users', icon: Users },
     { name: 'Properties', href: '/properties', icon: Building },
+    { name: 'Contacts', href: '/contacts', icon: MessageCircle },
+    { name: 'Meetings', href: '/meetings', icon: Calendar },
   ];
 
   const handleLogout = () => {
